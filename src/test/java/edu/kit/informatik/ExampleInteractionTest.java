@@ -25,7 +25,7 @@ public class ExampleInteractionTest {
                 List.of(new IP("141.255.1.133")),
                 List.of(new IP("0.146.197.108"))
             ),
-            "(122117.67.158 (141.255.1.133 0.146.197.108))"
+            "(122.117.67.158 (141.255.1.133 0.146.197.108))"
         );
 
         assertFalse(network.add(new Network("(122.117.67.158 0.146.197.108)")));
