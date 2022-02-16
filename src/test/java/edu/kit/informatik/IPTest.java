@@ -13,6 +13,9 @@ public class IPTest {
         assertValidIp("0.0.0.0");
         assertValidIp("192.0.2.235");
         assertValidIp("255.255.7.255");
+        assertValidIp("103.161.159.60");
+        assertValidIp("0.0.56.234");
+        assertValidIp("37.158.35.176");
         assertInvalidIp("127.0.0.01");
         assertInvalidIp("127.00.0.1");
         assertInvalidIp("256.1.1.1");
@@ -27,6 +30,7 @@ public class IPTest {
         assertInvalidIp("7dca:a502:9410:e14b:223d:644e:975c:7648");
         assertInvalidIp("::1");
         assertInvalidIp("::");
+        assertInvalidIp("localhost");
     }
 
     private void assertValidIp(String ipString) {
@@ -69,7 +73,9 @@ public class IPTest {
     private void assertIpOrdering(String... ipStrings) throws ParseException {
         List<IP> ips = new ArrayList<>(ipStrings.length);
         for (String ipString : ipStrings) {
-            ips.add(new IP(ipString));
+            IP ip = new IP(ipString);
+            assertEquals(ipString, ip.toString());
+            ips.add(ip);
         }
         for (int i = 0; i < ips.size(); ++i) {
             IP ip = ips.get(i);
