@@ -21,6 +21,12 @@ public class IPTest {
         assertInvalidIp("1.1 .1.1");
         assertInvalidIp("0.0.0.0.");
         assertInvalidIp("");
+        assertInvalidIp(".");
+        assertInvalidIp("....");
+        assertInvalidIp("d32c:12a2:6a24:5034:26d3:61e5:a58c:3066");
+        assertInvalidIp("7dca:a502:9410:e14b:223d:644e:975c:7648");
+        assertInvalidIp("::1");
+        assertInvalidIp("::");
     }
 
     private void assertValidIp(String ipString) {
