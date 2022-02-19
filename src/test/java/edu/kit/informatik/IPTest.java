@@ -20,6 +20,8 @@ public class IPTest {
         assertInvalidIp("127.00.0.1");
         assertInvalidIp("256.1.1.1");
         assertInvalidIp("-2.1.1.1");
+        assertInvalidIp("-0.0.0.0");
+        assertInvalidIp("0.-0.0.0");
         assertInvalidIp(" 1.1.1.1");
         assertInvalidIp("1.1 .1.1");
         assertInvalidIp("0.0.0.0.");
