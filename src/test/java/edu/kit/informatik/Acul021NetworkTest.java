@@ -246,7 +246,6 @@ class Acul021NetworkTest {
 
         assertNotEquals(net1, net3);
         assertNotEquals(net3, net1);
-        assertNotEquals(net1.hashCode(), net3.hashCode());
 
         assertEquals(net3, net4);
         assertEquals(net4, net3);
