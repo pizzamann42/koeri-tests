@@ -264,6 +264,28 @@ class Acul021NetworkTest {
 
     }
 
+    @Test
+    public void testNoSideEffectsAfterAdd() throws ParseException {
+        Network network = new Network(MEDIUM_NET);
+        //no overlapping nodes
+        assertNoDisconnectSideEffects(network, new Network(SMALL_NET), ip("85.193.148.81"), ip("141.255.1.133"));
+
+        //overlapping nodes
+        assertNoDisconnectSideEffects(
+            network,
+            new Network("(116.132.83.77 1.1.1.1 2.2.2.2 (5.5.5.5 3.3.3.3))"),
+            ip("116.132.83.77"),
+            ip("2.2.2.2")
+        );
+    }
+
+    private void assertNoDisconnectSideEffects(Network network, Network subnet, IP root, IP childToDisconnect) {
+        assertTrue(network.add(subnet));
+        String beforeDisconnection = network.toString(root);
+        assertTrue(subnet.disconnect(root, childToDisconnect));
+        assertEquals(beforeDisconnection, network.toString(root));
+    }
+
     private Network net(String net) {
         try {
             return new Network(net);
