@@ -10,22 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class Acul021NetworkTest {
     @Test
-    public void testConstructorWithRootAndChildren() throws ParseException {
-        IP root = new IP("192.168.178.65");
-        List<IP> children = new ArrayList<>(ips("192.168.178.64", "192.168.178.66"));
-        assertIllegalNetwork(null, null);
-        assertIllegalNetwork(root, null);
-        assertIllegalNetwork(null, children);
-        assertIllegalNetwork(root, List.of(root));
-        assertIllegalNetwork(root, List.of(root, ip("0.0.0.0")));
-        assertIllegalNetwork(root, ips("0.0.0.0", "0.0.0.0"));
-
-        Network network = new Network(root, children);
-        children.clear();
-        assertEquals(3, network.list().size());
-    }
-
-    @Test
     public void testParsingConstructor() throws ParseException {
         Network smallNet = new Network(SMALL_NET);
         assertEquals(SMALL_NET_SORTED, smallNet.toString(ip("85.193.148.81")));
