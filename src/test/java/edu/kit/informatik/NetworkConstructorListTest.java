@@ -14,8 +14,8 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class NetworkConstructorListTest {
     @ParameterizedTest
-    @MethodSource("illegalArgsProvider")
-    void testIllegalArgs(IP root, List<IP> children) {
+    @MethodSource("invalidArgsProvider")
+    void testInvalidArgs(IP root, List<IP> children) {
         assertThrows(RuntimeException.class, () -> new Network(root, children));
     }
 
@@ -29,7 +29,7 @@ public class NetworkConstructorListTest {
         assertEquals(3, network.list().size());
     }
 
-    static List<Arguments> illegalArgsProvider() {
+    static List<Arguments> invalidArgsProvider() {
         IP root = ip("192.168.178.65");
         IP other = ip("13.45.198.56");
         return List.of(

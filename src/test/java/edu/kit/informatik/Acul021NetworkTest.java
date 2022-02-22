@@ -2,39 +2,12 @@ package edu.kit.informatik;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static edu.kit.informatik.KoeriTestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class Acul021NetworkTest {
-    @Test
-    public void testParsingConstructor() throws ParseException {
-        Network smallNet = new Network(SMALL_NET);
-        assertEquals(SMALL_NET_SORTED, smallNet.toString(ip("85.193.148.81")));
-        assertIllegalNetwork("");
-        assertIllegalNetwork(" ");
-        assertIllegalNetwork("$%?!§%*ÄÜÖöäü:;-_");
-        assertIllegalNetwork("(0.0.0.0)");
-        assertIllegalNetwork("(0.0.0.0 (1.1.1.1)");
-        assertIllegalNetwork("(0.0.0.0 (1.1.1.1 2.2.2.2 )3.3.3.3 4.4.4.4()");
-        assertIllegalNetwork("(0.0.0.0  1.1.1.1)");
-        assertIllegalNetwork(" (0.0.0.0 1.1.1.1)");
-        assertIllegalNetwork("( 0.0.0.0 1.1.1.1)");
-        assertIllegalNetwork("(0 0.0.0 1.1.1.1)");
-        assertIllegalNetwork("(0,0.0.0 1.1.1.1)");
-        assertIllegalNetwork("(0:0.0.0 1.1.1.1)");
-        assertIllegalNetwork("(0.0.0.0,1.1.1.1)");
-        assertIllegalNetwork(null);
-        assertIllegalNetwork("(0.0.0.0 0.0.0.0)");
-        assertIllegalNetwork("(1.1.1.1 0.0.0.0 0.0.0.0)");
-        assertIllegalNetwork("(1.1.1.1 (0.0.0.0 2.2.2.2) 0.0.0.0)");
-        assertIllegalNetwork("(0.0.0.0 (0.0.0.0 1.1.1.1)");
-        assertIllegalNetwork("(1.1.1.1 (2.2.2.2 0.0.0.0) (3.3.3.3 0.0.0.0)");
-        assertIllegalNetwork("(0.0.0.0 (1.1.1.1 0.0.0.0)");
-    }
-
     @Test
     public void testList() throws ParseException {
         Network net = new Network("(192.168.178.1 192.168.178.0 192.168.178.15 0.0.0.0 29.65.234.123)");
