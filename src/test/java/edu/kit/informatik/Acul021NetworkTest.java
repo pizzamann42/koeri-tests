@@ -3,7 +3,6 @@ package edu.kit.informatik;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static edu.kit.informatik.KoeriTestUtils.*;
@@ -13,43 +12,43 @@ class Acul021NetworkTest {
     @Test
     public void testConstructorWithRootAndChildren() throws ParseException {
         IP root = new IP("192.168.178.65");
-        List<IP> invalidIPs = new ArrayList<>(Arrays.asList(new IP("192.168.178.65"), new IP("192.168.178.66")));
-        List<IP> IPs = new ArrayList<>(Arrays.asList(new IP("192.168.178.64"), new IP("192.168.178.66")));
-        assertThrows(RuntimeException.class, () -> new Network(null, null));
-        assertThrows(RuntimeException.class, () -> new Network(root, null));
-        assertThrows(RuntimeException.class, () -> new Network(null, IPs));
-        assertThrows(RuntimeException.class, () -> new Network(root, invalidIPs));
-        assertThrows(RuntimeException.class, () -> new Network(root, ips("0.0.0.0", "0.0.0.0")));
+        List<IP> children = new ArrayList<>(ips("192.168.178.64", "192.168.178.66"));
+        assertIllegalNetwork(null, null);
+        assertIllegalNetwork(root, null);
+        assertIllegalNetwork(null, children);
+        assertIllegalNetwork(root, List.of(root));
+        assertIllegalNetwork(root, List.of(root, ip("0.0.0.0")));
+        assertIllegalNetwork(root, ips("0.0.0.0", "0.0.0.0"));
 
-        Network testNetwork = new Network(root, IPs);
-        IPs.clear();
-        assertNotEquals(0, testNetwork.list().size());
+        Network network = new Network(root, children);
+        children.clear();
+        assertEquals(3, network.list().size());
     }
 
     @Test
     public void testParsingConstructor() throws ParseException {
         Network smallNet = new Network(SMALL_NET);
         assertEquals(SMALL_NET_SORTED, smallNet.toString(ip("85.193.148.81")));
-        assertThrows(ParseException.class, () -> new Network(""));
-        assertThrows(ParseException.class, () -> new Network(" "));
-        assertThrows(ParseException.class, () -> new Network("$%?!§%*ÄÜÖöäü:;-_"));
-        assertThrows(ParseException.class, () -> new Network("(0.0.0.0)"));
-        assertThrows(ParseException.class, () -> new Network("(0.0.0.0 (1.1.1.1))"));
-        assertThrows(ParseException.class, () -> new Network("(0.0.0.0 (1.1.1.1 2.2.2.2 )3.3.3.3 4.4.4.4())"));
-        assertThrows(ParseException.class, () -> new Network("(0.0.0.0  1.1.1.1)"));
-        assertThrows(ParseException.class, () -> new Network(" (0.0.0.0 1.1.1.1)"));
-        assertThrows(ParseException.class, () -> new Network("( 0.0.0.0 1.1.1.1)"));
-        assertThrows(ParseException.class, () -> new Network("(0 0.0.0 1.1.1.1)"));
-        assertThrows(ParseException.class, () -> new Network("(0,0.0.0 1.1.1.1)"));
-        assertThrows(ParseException.class, () -> new Network("(0:0.0.0 1.1.1.1)"));
-        assertThrows(ParseException.class, () -> new Network("(0.0.0.0,1.1.1.1)"));
-        assertThrows(ParseException.class, () -> new Network(null));
-        assertThrows(ParseException.class, () -> new Network("(0.0.0.0 0.0.0.0)"));
-        assertThrows(ParseException.class, () -> new Network("(1.1.1.1 0.0.0.0 0.0.0.0)"));
-        assertThrows(ParseException.class, () -> new Network("(1.1.1.1 (0.0.0.0 2.2.2.2) 0.0.0.0)"));
-        assertThrows(ParseException.class, () -> new Network("(0.0.0.0 (0.0.0.0 1.1.1.1))"));
-        assertThrows(ParseException.class, () -> new Network("(1.1.1.1 (2.2.2.2 0.0.0.0) (3.3.3.3 0.0.0.0))"));
-        assertThrows(ParseException.class, () -> new Network("(0.0.0.0 (1.1.1.1 0.0.0.0))"));
+        assertIllegalNetwork("");
+        assertIllegalNetwork(" ");
+        assertIllegalNetwork("$%?!§%*ÄÜÖöäü:;-_");
+        assertIllegalNetwork("(0.0.0.0)");
+        assertIllegalNetwork("(0.0.0.0 (1.1.1.1)");
+        assertIllegalNetwork("(0.0.0.0 (1.1.1.1 2.2.2.2 )3.3.3.3 4.4.4.4()");
+        assertIllegalNetwork("(0.0.0.0  1.1.1.1)");
+        assertIllegalNetwork(" (0.0.0.0 1.1.1.1)");
+        assertIllegalNetwork("( 0.0.0.0 1.1.1.1)");
+        assertIllegalNetwork("(0 0.0.0 1.1.1.1)");
+        assertIllegalNetwork("(0,0.0.0 1.1.1.1)");
+        assertIllegalNetwork("(0:0.0.0 1.1.1.1)");
+        assertIllegalNetwork("(0.0.0.0,1.1.1.1)");
+        assertIllegalNetwork(null);
+        assertIllegalNetwork("(0.0.0.0 0.0.0.0)");
+        assertIllegalNetwork("(1.1.1.1 0.0.0.0 0.0.0.0)");
+        assertIllegalNetwork("(1.1.1.1 (0.0.0.0 2.2.2.2) 0.0.0.0)");
+        assertIllegalNetwork("(0.0.0.0 (0.0.0.0 1.1.1.1)");
+        assertIllegalNetwork("(1.1.1.1 (2.2.2.2 0.0.0.0) (3.3.3.3 0.0.0.0)");
+        assertIllegalNetwork("(0.0.0.0 (1.1.1.1 0.0.0.0)");
     }
 
     @Test

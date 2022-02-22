@@ -48,4 +48,12 @@ public class KoeriTestUtils {
     public static List<IP> ips(String... ips) {
         return Arrays.stream(ips).map(KoeriTestUtils::ip).collect(Collectors.toList());
     }
+
+    public static void assertIllegalNetwork(IP root, List<IP> children) {
+        assertThrows(RuntimeException.class, () -> new Network(root, children));
+    }
+
+    public static void assertIllegalNetwork(String bracketNotation) {
+        assertThrows(ParseException.class, () -> new Network(bracketNotation));
+    }
 }
