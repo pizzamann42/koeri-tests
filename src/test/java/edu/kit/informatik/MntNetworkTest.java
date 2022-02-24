@@ -1,6 +1,5 @@
-package edu.kit.informatik.network;
+package edu.kit.informatik;
 
-import edu.kit.informatik.parsing.ParseException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -17,7 +16,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class NetworkTestMNT {
+class MntNetworkTest {
     private static Stream<String> treeFileNames() {
         return IntStream.range(1, 6).mapToObj((i) -> "bracket_notation" + String.valueOf(i) + ".txt");
     }
@@ -57,8 +56,6 @@ class NetworkTestMNT {
         String instr = inreader.readLine();
         Network network = new Network(instr);
         String rootIp = instr.split(" ")[0].substring(1);
-        assertTrue(network.checkAcyclic());
-        assertTrue(network.isConnected());
         assertEquals(instr, network.toString(new IP(rootIp)));
     }
 

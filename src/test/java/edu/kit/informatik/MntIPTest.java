@@ -1,6 +1,5 @@
-package edu.kit.informatik.network;
+package edu.kit.informatik;
 
-import edu.kit.informatik.parsing.ParseException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -10,8 +9,7 @@ import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class IPTestMNT {
-
+class MntIPTest {
     private BufferedReader getFileReader(String name) {
         try {
             URL file = getClass().getClassLoader().getResource(name);
