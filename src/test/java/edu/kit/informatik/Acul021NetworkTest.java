@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static edu.kit.informatik.KoeriTestUtils.*;
+import static edu.kit.informatik.util.KoeriTestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class Acul021NetworkTest {

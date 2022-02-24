@@ -1,4 +1,6 @@
-package edu.kit.informatik;
+package edu.kit.informatik.util;
+
+import edu.kit.informatik.IP;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -6,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -60,5 +63,9 @@ public class KoeriTestUtils {
                 )
             )
         );
+    }
+
+    public static Stream<String> lines(String resource) {
+        return reader(resource).lines();
     }
 }

@@ -1,34 +1,34 @@
 package edu.kit.informatik;
 
+import edu.kit.informatik.util.KoeriTestUtils;
+import edu.kit.informatik.util.LinesSource;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static edu.kit.informatik.KoeriTestUtils.ip;
-import static edu.kit.informatik.KoeriTestUtils.reader;
+import static edu.kit.informatik.util.KoeriTestUtils.ip;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class IPTest {
     @ParameterizedTest
-    @CsvFileSource(resources = "/ip/valid")
+    @LinesSource("ip/valid")
     void testValidIpParsing(String validIp) {
         assertEquals(validIp, ip(validIp).toString());
     }
 
     @ParameterizedTest
     @NullAndEmptySource
-    @MethodSource("invalidIpProvider")
+    @LinesSource("ip/invalid")
     void testInvalidIpParsing(String invalidIp) {
         assertThrows(ParseException.class, () -> new IP(invalidIp));
     }
 
     @ParameterizedTest
-    @MethodSource("sortedIpProvider")
+    @LinesSource(value = {"ip/sorted_0", "ip/sorted_1"}, flatten = false)
     void testIpCompare(Stream<String> ipStrings) {
         List<IP> ips = ipStrings.map(KoeriTestUtils::ip).collect(Collectors.toList());
         int idx = 0;
@@ -45,14 +45,5 @@ public class IPTest {
             }
             ++idx;
         }
-    }
-
-    // Don't use CSV source to allow all characters except newline
-    static Stream<String> invalidIpProvider() {
-        return reader("ip/invalid").lines();
-    }
-
-    static List<Stream<String>> sortedIpProvider() {
-        return List.of(reader("ip/sorted_0").lines(), reader("ip/sorted_1").lines());
     }
 }
