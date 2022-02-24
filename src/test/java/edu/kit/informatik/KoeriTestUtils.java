@@ -1,7 +1,10 @@
 package edu.kit.informatik;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,5 +50,15 @@ public class KoeriTestUtils {
 
     public static List<IP> ips(String... ips) {
         return Arrays.stream(ips).map(KoeriTestUtils::ip).collect(Collectors.toList());
+    }
+
+    public static BufferedReader reader(String resource) {
+        return new BufferedReader(
+            new InputStreamReader(
+                Objects.requireNonNull(
+                    KoeriTestUtils.class.getClassLoader().getResourceAsStream(resource)
+                )
+            )
+        );
     }
 }
