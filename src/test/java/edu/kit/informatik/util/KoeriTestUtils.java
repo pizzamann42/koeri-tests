@@ -1,10 +1,12 @@
 package edu.kit.informatik.util;
 
 import edu.kit.informatik.IP;
+import edu.kit.informatik.Network;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -55,6 +57,10 @@ public class KoeriTestUtils {
         return Arrays.stream(ips).map(KoeriTestUtils::ip).collect(Collectors.toList());
     }
 
+    public static Network network(String bracketNotation) {
+        return assertDoesNotThrow(() -> new Network(bracketNotation));
+    }
+
     public static BufferedReader reader(String resource) {
         return new BufferedReader(
             new InputStreamReader(
@@ -67,5 +73,14 @@ public class KoeriTestUtils {
 
     public static Stream<String> lines(String resource) {
         return reader(resource).lines();
+    }
+
+    public static String singleLine(String resource) {
+        try (Stream<String> lines = lines(resource)) {
+            Iterator<String> it = lines.iterator();
+            String line = it.next();
+            assertFalse(it.hasNext());
+            return line;
+        }
     }
 }
