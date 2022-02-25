@@ -13,7 +13,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class NetworkEqualsTest {
     @ParameterizedTest
-    @MethodSource("equalNetworksProvider")
+    @MethodSource("equalProvider")
     void testEquals(Network aSorted, Network aRandom, Network bSorted, Network bRandom) {
         assertEquals(aSorted, aSorted);
         assertBothEquals(aSorted, aRandom);
@@ -32,15 +32,33 @@ public class NetworkEqualsTest {
         assertEquals(o2, o1);
     }
 
-    static Stream<Arguments> equalNetworksProvider() {
-        return IntStream.range(0, 5).mapToObj(NetworkEqualsTest::equalNetworksArgs);
+    @ParameterizedTest
+    @MethodSource("notEqualProvider")
+    void testNotEqual(Network network, Stream<Network> other) {
+        other.forEach(o -> assertNotEquals(network, o));
     }
 
-    static Arguments equalNetworksArgs(int networkId) {
-        Network aSorted = network(singleLine("network/" + networkId + "/a_sorted"));
-        Network aRandom = network(singleLine("network/" + networkId + "/a_random"));
-        Network bSorted = network(singleLine("network/" + networkId + "/b_sorted"));
-        Network bRandom = network(singleLine("network/" + networkId + "/b_random"));
+    static Stream<Arguments> equalProvider() {
+        return IntStream.range(0, 5).mapToObj(NetworkEqualsTest::equalArgs);
+    }
+
+    static Arguments equalArgs(int networkId) {
+        Network aSorted = network(networkId, "/a_sorted");
+        Network aRandom = network(networkId, "/a_random");
+        Network bSorted = network(networkId, "/b_sorted");
+        Network bRandom = network(networkId, "/b_random");
         return arguments(aSorted, aRandom, bSorted, bRandom);
+    }
+
+    static Stream<Arguments> notEqualProvider() {
+        return IntStream.range(0, 5).mapToObj(NetworkEqualsTest::notEqualArgs);
+    }
+
+    static Arguments notEqualArgs(int networkId) {
+        Stream<Network> other = IntStream
+            .range(0, 5)
+            .filter(id -> id != networkId)
+            .mapToObj(id -> network(id, "/a_random"));
+        return arguments(network(networkId, "/a_random"), other);
     }
 }

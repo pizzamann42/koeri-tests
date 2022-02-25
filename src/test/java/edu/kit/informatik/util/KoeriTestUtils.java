@@ -61,6 +61,10 @@ public class KoeriTestUtils {
         return assertDoesNotThrow(() -> new Network(bracketNotation));
     }
 
+    public static Network network(int id, String file) {
+        return network(singleLine("network/" + id + "/" + file));
+    }
+
     public static BufferedReader reader(String resource) {
         return new BufferedReader(
             new InputStreamReader(
