@@ -37,12 +37,11 @@ public class NetworkListTest {
         assertEquals(original, network);
     }
 
-    void tryModify(Executable exe) {
+    void tryModify(Runnable action) {
         try {
-            exe.execute();
+            action.run();
         } catch (UnsupportedOperationException ignored) {
-        } catch (Throwable e) {
-            throw new AssertionError(e);
+            // Unmodifiable collections may throw
         }
     }
 
