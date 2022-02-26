@@ -3,7 +3,6 @@ package edu.kit.informatik;
 import edu.kit.informatik.util.KoeriTestUtils;
 import edu.kit.informatik.util.LinesSource;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import java.util.List;

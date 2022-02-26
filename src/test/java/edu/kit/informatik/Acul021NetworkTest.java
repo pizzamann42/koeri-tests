@@ -60,19 +60,19 @@ class Acul021NetworkTest {
         assertEquals("(85.193.148.81 34.49.145.239 (141.255.1.133 0.146.197.108 122.117.67.158) "
                 + "(231.189.0.127 39.20.222.120 77.135.84.171 116.132.83.77 252.29.23.0))",
             net.toString(ip("85.193.148.81")));
-        assertTrue(net.add(net("(1.0.0.0 1.0.0.1 1.0.0.2)")));
+        assertTrue(net.add(network("(1.0.0.0 1.0.0.1 1.0.0.2)")));
         assertEquals("(0.0.0.0 1.1.1.1)", net.toString(ip("0.0.0.0")));
         assertEquals("(1.0.0.0 1.0.0.1 1.0.0.2)", net.toString(ip("1.0.0.0")));
-        assertTrue(net.add(net("(1.1.1.1 2.2.2.2 1.0.0.1)")));
+        assertTrue(net.add(network("(1.1.1.1 2.2.2.2 1.0.0.1)")));
         assertEquals("(1.1.1.1 0.0.0.0 (1.0.0.1 (1.0.0.0 1.0.0.2)) 2.2.2.2)", net.toString(ip("1.1.1.1")));
     }
 
     @Test
     public void testConnect() throws ParseException {
         Network net = new Network(SMALL_NET);
-        net.add(net("(0.0.0.0 1.1.1.1)"));
-        net.add(net("(1.0.0.1 1.0.0.2)"));
-        net.add(net("(0.0.0.1 0.0.0.2 0.0.0.3 0.0.0.4)"));
+        net.add(network("(0.0.0.0 1.1.1.1)"));
+        net.add(network("(1.0.0.1 1.0.0.2)"));
+        net.add(network("(0.0.0.1 0.0.0.2 0.0.0.3 0.0.0.4)"));
         assertFalse(() -> net.connect(null, null));
         assertFalse(() -> net.connect(ip("0.0.0.0"), null));
         assertFalse(() -> net.connect(null, ip("0.0.0.0")));
@@ -141,24 +141,6 @@ class Acul021NetworkTest {
     }
 
     @Test
-    public void testGetPath() {
-        Network net = net(SMALL_NET);
-        assertEquals(List.of(), net.getRoute(null, null));
-        assertEquals(List.of(), net.getRoute(ip("141.255.1.133"), null));
-        assertEquals(List.of(), net.getRoute(null, ip("141.255.1.133")));
-        assertEquals(List.of(), net.getRoute(ip("141.255.1.133"), ip("0.0.0.0")));
-        assertEquals(List.of(), net.getRoute(ip("0.0.0.0"), ip("141.255.1.133")));
-
-        assertEquals(ips("85.193.148.81", "141.255.1.133", "122.117.67.158"),
-            net.getRoute(ip("85.193.148.81"), ip("122.117.67.158")));
-        assertEquals(ips("122.117.67.158", "141.255.1.133", "85.193.148.81", "231.189.0.127", "39.20.222.120"),
-            net.getRoute(ip("122.117.67.158"), ip("39.20.222.120")));
-
-        assertTrue(() -> net.add(net("(0.0.0.0 1.1.1.1 2.2.2.2 (3.3.3.3 4.4.4.4))")));
-        assertEquals(List.of(), net.getRoute(ip("39.20.222.120"), ip("4.4.4.4")));
-    }
-
-    @Test
     public void testEqualsAndHashCode() throws ParseException {
         Network net1 = new Network(MEDIUM_NET);
         Network net2 = new Network(MEDIUM_NET);
@@ -208,13 +190,5 @@ class Acul021NetworkTest {
         String beforeDisconnection = network.toString(root);
         assertTrue(subnet.disconnect(root, childToDisconnect));
         assertEquals(beforeDisconnection, network.toString(root));
-    }
-
-    private Network net(String net) {
-        try {
-            return new Network(net);
-        } catch (ParseException e) {
-            throw new IllegalArgumentException(e);
-        }
     }
 }
