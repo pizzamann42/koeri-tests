@@ -32,9 +32,11 @@ public class NetworkAddTest {
     }
 
     static Arguments unionArgs(int id) {
-        Iterator<String> it = lines("network/union_" + id).iterator();
-        Arguments args = arguments(it.next(), it.next(), network(it.next()));
-        Preconditions.condition(!it.hasNext(), "Expected 3 lines: two networks and their union");
-        return args;
+        try (Stream<String> lines = lines("network/union_" + id)) {
+            Iterator<String> it = lines.iterator();
+            Arguments args = arguments(it.next(), it.next(), network(it.next()));
+            Preconditions.condition(!it.hasNext(), "Expected 3 lines: two networks and their union");
+            return args;
+        }
     }
 }
