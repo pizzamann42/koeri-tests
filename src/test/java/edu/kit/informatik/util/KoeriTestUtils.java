@@ -65,6 +65,10 @@ public class KoeriTestUtils {
         return network(singleLine("network/" + id + "/" + file));
     }
 
+    public static Stream<Network> networks(int id, String... files) {
+        return Arrays.stream(files).map(file -> network(id, file));
+    }
+
     public static BufferedReader reader(String resource) {
         return new BufferedReader(
             new InputStreamReader(
