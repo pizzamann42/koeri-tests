@@ -1,10 +1,13 @@
 package edu.kit.informatik;
 
+import edu.kit.informatik.util.KoeriTestUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static edu.kit.informatik.util.KoeriTestUtils.*;
@@ -28,19 +31,14 @@ public class NetworkGetRouteTest {
     static Stream<Arguments> validArgsProvider() {
         Network network = network(SMALL_NET);
         return Stream.of(
-            arguments(
-                network,
-                ip("85.193.148.81"),
-                ip("122.117.67.158"),
-                ips("85.193.148.81", "141.255.1.133", "122.117.67.158")
-            ),
-            arguments(
-                network,
-                ip("122.117.67.158"),
-                ip("39.20.222.120"),
-                ips("122.117.67.158", "141.255.1.133", "85.193.148.81", "231.189.0.127", "39.20.222.120")
-            )
+            validArgs(network, "85.193.148.81", "141.255.1.133", "122.117.67.158"),
+            validArgs(network, "122.117.67.158", "141.255.1.133", "85.193.148.81", "231.189.0.127", "39.20.222.120")
         );
+    }
+
+    static Arguments validArgs(Network network, String... ipStrings) {
+        List<IP> ips = Arrays.stream(ipStrings).map(KoeriTestUtils::ip).collect(Collectors.toList());
+        return arguments(network, ips.get(0), ips.get(ips.size() - 1), ips);
     }
 
     static Stream<Arguments> invalidArgsProvider() {
