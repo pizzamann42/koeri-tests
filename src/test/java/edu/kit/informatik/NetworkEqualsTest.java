@@ -30,6 +30,7 @@ public class NetworkEqualsTest {
     void assertBothEquals(Object o1, Object o2) {
         assertEquals(o1, o2);
         assertEquals(o2, o1);
+        assertEquals(o1.hashCode(), o2.hashCode());
     }
 
     @ParameterizedTest
