@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.platform.commons.util.Preconditions;
 
 import java.util.Iterator;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static edu.kit.informatik.util.KoeriTestUtils.lines;
@@ -27,11 +28,11 @@ public class NetworkAddTest {
     }
 
     static Stream<Arguments> unionProvider() {
-        return Stream.of(unionArgs("union_0"));
+        return IntStream.range(0, 6).mapToObj(NetworkAddTest::unionArgs);
     }
 
-    static Arguments unionArgs(String resource) {
-        Iterator<String> it = lines("network/" + resource).iterator();
+    static Arguments unionArgs(int id) {
+        Iterator<String> it = lines("network/union_" + id).iterator();
         Arguments args = arguments(it.next(), it.next(), network(it.next()));
         Preconditions.condition(!it.hasNext(), "Expected 3 lines: two networks and their union");
         return args;
