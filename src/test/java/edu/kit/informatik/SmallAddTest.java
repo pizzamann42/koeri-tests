@@ -5,9 +5,6 @@ import edu.kit.informatik.network.IP;
 import edu.kit.informatik.network.Network;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static edu.kit.informatik.util.KoeriTestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 class SmallAddTest {
 
