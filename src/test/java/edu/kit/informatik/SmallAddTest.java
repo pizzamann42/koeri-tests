@@ -1,8 +1,5 @@
 package edu.kit.informatik;
 
-import edu.kit.informatik.exceptions.ParseException;
-import edu.kit.informatik.network.IP;
-import edu.kit.informatik.network.Network;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
