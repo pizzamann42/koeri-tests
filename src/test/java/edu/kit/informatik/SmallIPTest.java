@@ -24,6 +24,7 @@ class SmallIPTest {
         tryParsingInvalidIP(null);
         tryParsingInvalidIP("koeriLiebeIstWahreLiebe");
         tryParsingInvalidIP("x.x.x.x");
+        tryParsingInvalidIP("1.1.1.1.1");
     }
 
     private static void tryParsingInvalidIP(String ipString) {
